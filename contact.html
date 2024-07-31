@@ -1,44 +1,87 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="styles.css">
-    <title>Contact Us</title>
+    <title>Contact Form with CAPTCHA</title>
+    <style>
+        .error {
+            color: red;
+        }
+        .btn {
+            margin-top: 10px;
+        }
+        #captcha-image {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            background-color: #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-      <div class="navbar">
-        <img src="logo.png" class="logo">
-        <nav>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Product</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
-        <a href=""><i class="fa cart fa-cart plus"></i></a>
-      </div>
-      
-    <div class="contact-form">
-      <h2>Contact Us</h2>
-      <form action="submit_form.php" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    <h2>Contact Form</h2>
+    <form id="contactForm" action="submit_form.php" method="post">
         <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-        <button type="submit" class="btn">Submit</button>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script> <script> grecaptcha.render('captcha', { 'sitekey' : 'your-site-key-here' }); </script>
+        <textarea id="message" name="message" required></textarea><br><br>
 
-      </form>
-    </div>
-  </div>
+        <div id="captcha-image"></div>
+        <label for="captcha">Enter the text shown above:</label>
+        <input type="text" id="captcha" name="captcha" required><br><br>
+
+        <button type="submit" class="btn">Send</button>
+        <p id="errorMessages" class="error"></p>
+    </form>
+
+    <script>
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let captchaText = '';
+            for (let i = 0; i < 6; i++) {
+                captchaText += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            document.getElementById('captcha-image').innerText = captchaText;
+            document.getElementById('captcha-image').dataset.captcha = captchaText;
+        }
+
+        document.addEventListener('DOMContentLoaded', generateCaptcha);
+
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Clear previous error messages
+            document.getElementById("errorMessages").innerHTML = "";
+
+            // Get form values
+            let message = document.getElementById("message").value;
+            let captcha = document.getElementById("captcha").value;
+            let captchaText = document.getElementById('captcha-image').dataset.captcha;
+
+            // Error messages array
+            let errorMessages = [];
+
+            // Validate message
+            if (message === "") {
+                errorMessages.push("Message is required.");
+            }
+
+            // Validate CAPTCHA
+            if (captcha === "") {
+                errorMessages.push("CAPTCHA is required.");
+            } else if (captcha !== captchaText) {
+                errorMessages.push("CAPTCHA is incorrect.");
+            }
+
+            // If there are error messages, display them and prevent form submission
+            if (errorMessages.length > 0) {
+                document.getElementById("errorMessages").innerHTML = errorMessages.join("<br>");
+            } else {
+                // If no errors, submit the form
+                this.submit();
+            }
+        });
+    </script>
 </body>
 </html>
-    
