@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form with CAPTCHA</title>
+  <meta name="viewport" content="width=device-width, intial-scale=1.0">
+  <link rel="stylesheet" 
+href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="styles.css">
+    <title>Contact Form</title>
     <style>
         .error {
             color: red;
@@ -23,6 +27,17 @@
 </head>
 <body>
     <h2>Contact Form</h2>
+     <body>
+    <div class="container">
+      <div class="navbar">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Pringles_2021.svg/800px-Pringles_2021.svg.png" class="logo">
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </nav>
     <form id="contactForm" action="submit_form.php" method="post">
         <label for="message">Message:</label>
         <textarea id="message" name="message" required></textarea><br><br>
