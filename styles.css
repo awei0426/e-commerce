@@ -9,6 +9,7 @@
   height:73vh;
   width:105%;
   background-image:url(https://facts.net/wp-content/uploads/2023/09/20-facts-about-sprite-1695406210.jpg);
+  background-repeat: repeat-y;
   background-position:center;
   background-size:cover;
   padding-right:5%;
